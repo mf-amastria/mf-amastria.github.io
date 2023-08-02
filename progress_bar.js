@@ -15,6 +15,7 @@ class CustomElement {
         return this._element
     }
 
+    // Prevents the need to call '.node' when appending to elements
     appendChild(element) { 
         this._element.appendChild(element.node)
     }
@@ -48,6 +49,15 @@ class ProgressBarChunk extends CustomElement{
         this._element.style.backgroundColor = color
     }
 
+    enable() {
+        const color = this._color;
+        color.lightness = LIGHTNESS_ACTIVE
+        color.saturation = SATURATION_ACTIVE
+        this._color = color
+        this.updateBackgroundColor(color)
+        this._enabled = true
+    }
+
     disable() {
         const color = this._color;
         color.lightness = LIGHTNESS_INACTIVE
@@ -61,6 +71,8 @@ class ProgressBarChunk extends CustomElement{
 class ProgressBar extends CustomElement {
     constructor(id, segments=10) {
         super()
+        this._total_segments = segments
+        this._current_segment = segments
         this._element = document.createElement("div")
         this._element.id = `progress_bar_${id}`
         this._element.classList.add("prog-bar")
@@ -91,6 +103,10 @@ class ProgressBar extends CustomElement {
     }
 
     update_level(level){
+        if (this._current_segment < level) {
+            this.reset()
+        }
+        this._current_segment = level
         const inactive_blocks = this._chunks.length - level;
         for (let i = 0; i < inactive_blocks; i++) {
             this._chunks[i].disable()
@@ -100,6 +116,34 @@ class ProgressBar extends CustomElement {
         else 
             return this._chunks[0]._color
     }
+
+    reset() {
+        for (const chunk of this._chunks) {
+            chunk.enable()
+        }
+    }
 }
 
-export { Root, ProgressBar, HSL}
+class BasicContentDisplay extends CustomElement {
+    constructor(id, header, message) {
+        super()
+        this._element = document.createElement('div');
+        this._element.id = `button_status_${id}`;
+        this._element.classList.add("button_status")
+
+        this._header_element = document.createElement('h3');
+        this._header_element.textContent = header;
+        this._paragraph_element = document.createElement('p');
+        this._paragraph_element.textContent = message;
+
+        this._element.appendChild(this._header_element );
+        this._element.appendChild(this._paragraph_element);
+    }
+
+    update_message(header, message) {
+        this._header_element.textContent = header;
+        this._paragraph_element.textContent = message;
+    }
+}
+
+export { Root, ProgressBar, BasicContentDisplay, HSL}

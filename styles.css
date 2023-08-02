@@ -38,3 +38,7 @@ body {
     border: 1px solid;
     border-color: rgb(60,60,60,.2);
 }
+
+.button_status {
+    padding: 10px;
+}
