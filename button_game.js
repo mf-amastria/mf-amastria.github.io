@@ -3,7 +3,7 @@ import { Root, ProgressBar, BasicContentDisplay } from "./progress_bar.js";
 
 const FETCH_INTERVAL = 10 * 1000; // seconds * 1000ms
 const MAX_RETRIES = 3;
-const BUTTON_API = 'http://192.168.1.7:5005'
+const BUTTON_API = 'http://66.27.115.160:5005'
 
 const fetchStatus = async () => {
     const response = await fetch(`${BUTTON_API}/status`);
