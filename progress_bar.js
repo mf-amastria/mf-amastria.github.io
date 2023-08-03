@@ -43,6 +43,7 @@ class ProgressBarChunk extends CustomElement{
         this._id = id;
         this._color = color;
         this._enabled = true
+        // Build element
         this._element = document.createElement("div")
         this._element.id = `chunk_${id}`
         this._element.classList.add("prog-bar-chunk")
@@ -73,9 +74,11 @@ class ProgressBar extends CustomElement {
         super()
         this._total_segments = segments
         this._current_segment = segments
+        // Builds element
         this._element = document.createElement("div")
         this._element.id = `progress_bar_${id}`
         this._element.classList.add("prog-bar")
+        // Setup chunks
         this._chunks = []
         for(let i = 0; i < segments; i++ ){
             const chunk = new ProgressBarChunk(
@@ -127,20 +130,22 @@ class ProgressBar extends CustomElement {
 class BasicContentDisplay extends CustomElement {
     constructor(id, header, message) {
         super()
+        // Build element
         this._element = document.createElement('div');
         this._element.id = `button_status_${id}`;
         this._element.classList.add("button_status")
-
+        // build header / paragraph elements
         this._header_element = document.createElement('h3');
         this._header_element.textContent = header;
         this._paragraph_element = document.createElement('p');
         this._paragraph_element.textContent = message;
-
+        // append to parent element
         this._element.appendChild(this._header_element );
         this._element.appendChild(this._paragraph_element);
     }
 
     update_message(header, message) {
+        // Allows of live edits of the elements
         this._header_element.textContent = header;
         this._paragraph_element.textContent = message;
     }
