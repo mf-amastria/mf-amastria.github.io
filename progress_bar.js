@@ -46,6 +46,7 @@ class ProgressBarChunk extends CustomElement{
         // Build element
         this._element = document.createElement("div")
         this._element.id = `chunk_${id}`
+        this._element.textContent = id + 1
         this._element.classList.add("prog-bar-chunk")
         this._element.style.backgroundColor = color
     }

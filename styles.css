@@ -24,13 +24,20 @@ body {
 
 .prog-bar {
     display: flex;
-
+    flex-direction: column-reverse;
     width: 90%;
-    height: 30px;
+    /* height: 30px; */
 
     border: 2px solid;
     border-color: black;
     box-shadow: 5px 5px 5px black;
+}
+
+@media (min-width: 768px) {
+    .prog-bar {
+        flex-direction: row;
+        height: 30px;
+    }
 }
 
 .prog-bar-chunk {
